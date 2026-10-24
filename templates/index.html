@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="modules-grid">
+
+    <!-- MÓDULO 1: FAMÍLIA VIRTUAL -->
+    <div class="module-card">
+        <h2>1. Família Virtual (IA)</h2>
+        <div class="sub-buttons">
+          <a href="{{ url_for('familia.menu_familia') }}" class="btn-sub" style="text-decoration:none; display:block;">1. Perfis & Prompts Mestre</a>
+            <button class="btn-sub" onclick="abrirSubModulo('Família', 'Galeria de Mídia (Fotos/Seeds)')">2. Galeria de Mídia (20-30 Fotos)</button>
+            <button class="btn-sub" onclick="abrirSubModulo('Família', 'Vozes e Clones OnElevenLabs')">3. Perfis de Voz & Áudio</button>
+
+            <button class="btn-sub" onclick="abrirSubModulo('Família', 'Histórico e Roteiros')">4. Roteiros & Backstories</button>
+            <button class="btn-sub" onclick="abrirSubModulo('Família', 'Gerador de Vídeos de IA')">5. Gerador de Mídia Síntese</button>
+            <button class="btn-sub" onclick="abrirSubModulo('Família', 'Registro de Propriedade/Hash')">6. Prova de Autoria & Timestamp</button>
+        </div>
+    </div>
+
+    <!-- MÓDULO 2: PRODUTOS & OFERTAS -->
+    <div class="module-card">
+        <h2>2. Produtos & Ofertas</h2>
+        <div class="sub-buttons">
+            <button class="btn-sub" onclick="abrirSubModulo('Produtos', 'Mineração de Produtos Campeões')">1. Mineração de Produtos</button>
+            <button class="btn-sub" onclick="abrirSubModulo('Produtos', 'Links de Afiliados e Tráfego')">2. Links de Afiliados & Curtos</button>
+            <button class="btn-sub" onclick="abrirSubModulo('Produtos', 'Cadastro de Fornecedores/Drop')">3. Cadastro de Fornecedores</button>
+            <button class="btn-sub" onclick="abrirSubModulo('Produtos', 'Mídias e Vídeos do Produto')">4. Biblioteca de Vídeos Brutos</button>
+            <button class="btn-sub" onclick="abrirSubModulo('Produtos', 'Tabela de Margens e Preços')">5. Margens & Calculadora</button>
+            <button class="btn-sub" onclick="abrirSubModulo('Produtos', 'Histórico de Vendas/Cliques')">6. Métricas de Conversão</button>
+
+        </div>
+    </div>
+
+    <!-- MÓDULO 3: CANAIS & REDES -->
+    <div class="module-card">
+        <h2>3. Canais & Redes</h2>
+        <div class="sub-buttons">
+            <button class="btn-sub" onclick="abrirSubModulo('Redes', 'Gestão de Contas YouTube/Insta/TT')">1. Contas & Redes Sociais</button>
+
+            <button class="btn-sub" onclick="abrirSubModulo('Redes', 'Fila de Publicação Automática')">2. Agendador de Postagens</button>
+            <button class="btn-sub" onclick="abrirSubModulo('Redes', 'Monitor de Direitos Autorais/Match')">3. Proteção Copyright Match</button>
+            <button class="btn-sub" onclick="abrirSubModulo('Redes', 'Análise de Algoritmo/Métricas')">4. Métricas de Desempenho</button>
+
+            <button class="btn-sub" onclick="abrirSubModulo('Redes', 'Respostas e Comentários Bot')">5. Interação & Comentários</button>
+
+            <button class="btn-sub" onclick="abrirSubModulo('Redes', 'Sitemap e Links do Profile (Bio)')">6. Árvore de Links na Bio</button>
+        </div>
+    </div>
+
+    <!-- MÓDULO 4: INFRA & PROTEÇÃO -->
+    <div class="module-card">
+        <h2>4. Infra & Segurança</h2>
+        <div class="sub-buttons">
+            <button class="btn-sub" onclick="abrirSubModulo('Infra', 'Registro de Marca e INPI')">1. Documentos INPI & Marca</button>
+
+            <button class="btn-sub" onclick="abrirSubModulo('Infra', 'Gerenciador de Backups Git LFS')">2. Status de Backup (Git/Cloud)</button>
+
+            <button class="btn-sub" onclick="abrirSubModulo('Infra', 'Logs do Sistema Flask')">3. Logs do Servidor & Erros</button>
+            <button class="btn-sub" onclick="abrirSubModulo('Infra', 'Chaves API (Ollama/OpenAI)')">4. Gestão de Chaves API</button>
+            <button class="btn-sub" onclick="abrirSubModulo('Infra', 'Banco de Dados SQLite/Postgres')">5. Admin Banco de Dados</button>
+            <button class="btn-sub" onclick="abrirSubModulo('Infra', 'Configurações do Servidor/VM')">6. Configurações da VM</button>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

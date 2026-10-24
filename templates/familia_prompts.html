@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card-container" style="background: var(--card-bg); border: 1px solid var(--border); padding: 25px; border-radius: 8px;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 20px;">
+        <h2 style="color: var(--accent); margin: 0;">Gestão da Família Virtual - Perfis & Prompts</h2>
+        <a href="{{ url_for('index') }}" style="color: var(--text-muted); text-decoration: none;">← Voltar ao Painel</a>
+    </div>
+
+    <!-- NAVEGAÇÃO DIVIDIDA POR SEÇÕES -->
+    <div style="margin-bottom: 25px;">
+        <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; font-weight: bold;">
+            👴👵 Linhagem Tradicional (Casa, Segurança & Confiança)
+        </div>
+        <div class="family-tabs" style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+            <a href="?p=vova_raiz" class="tab-btn {% if personagem == 'vova_raiz' %}active{% endif %}">👵 Vovó Raíz</a>
+            <a href="?p=vovo_raiz" class="tab-btn {% if personagem == 'vovo_raiz' %}active{% endif %}">👴 Vovô Raíz</a>
+        </div>
+
+        <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; font-weight: bold;">
+            🏃‍♀️🏃‍♂️ Linhagem Fitness (Saúde, Performance & Estética)
+        </div>
+        <div class="family-tabs" style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+            <a href="?p=vova_fit" class="tab-btn {% if personagem == 'vova_fit' %}active{% endif %}">🏃‍♀️ Vovó Fit</a>
+            <a href="?p=vovo_fit" class="tab-btn {% if personagem == 'vovo_fit' %}active{% endif %}">🏃‍♂️ Vovô Fit</a>
+        </div>
+
+        <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; font-weight: bold;">
+            👨‍👩‍👧‍👦 Núcleo Familiar Principal & Pet
+        </div>
+        <div class="family-tabs" style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+            <a href="?p=mamae" class="tab-btn {% if personagem == 'mamae' %}active{% endif %}">👩 Mamãe (36a)</a>
+            <a href="?p=papai" class="tab-btn {% if personagem == 'papai' %}active{% endif %}">👨 Papai (38a)</a>
+            <a href="?p=filha" class="tab-btn {% if personagem == 'filha' %}active{% endif %}">👩‍🦱 Filha Jovem (21a)</a>
+            <a href="?p=filho" class="tab-btn {% if personagem == 'filho' %}active{% endif %}">👦 Filho Teen (17a)</a>
+            <a href="?p=pet" class="tab-btn {% if personagem == 'pet' %}active{% endif %}">🐶 Pet</a>
+        </div>
+
+        <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; font-weight: bold;">
+            🎭 Personagens Secundários (Campanhas Pontuais)
+        </div>
+        <div class="family-tabs" style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="?p=coringa_kids" class="tab-btn {% if personagem == 'coringa_kids' %}active{% endif %}">🎈 Coringas Kids / Infantil</a>
+        </div>
+    </div>
+
+    <!-- ÁREA DO PROMPT MESTRE DO PERSONAGEM -->
+    <div style="margin-bottom: 30px; background: #121214; padding: 20px; border-radius: 6px; border: 1px solid var(--border);">
+        <label style="display: block; font-weight: bold; margin-bottom: 8px; color: var(--accent);">
+            PROMPT MESTRE DE IA ({{ personagem | upper }}):
+        </label>
+        <textarea id="promptText" rows="4" style="width: 100%; background: #1a1a1e; color: #e1e1e6; border: 1px solid var(--border); padding: 12px; border-radius: 6px; font-family: monospace; font-size: 0.95rem; box-sizing: border-box; resize: vertical;">{{ prompt }}</textarea>
+        <div style="margin-top: 12px; display: flex; gap: 10px;">
+            <button onclick="copiarPrompt()" class="btn-action">📋 Copiar Prompt</button>
+            <button onclick="alert('Prompt salvo no sistema!')" class="btn-action primary">💾 Salvar Prompt</button>
+        </div>
+    </div>
+
+    <!-- GALERIA DE IMAGENS GERADAS -->
+    <div style="border-top: 1px solid var(--border); padding-top: 20px;">
+        <h3 style="color: #fff; margin-top: 0;">🖼️ Galeria de Fotos Salvas ({{ fotos|length }})</h3>
+        
+        {% if fotos %}
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; margin-top: 15px;">
+                {% for foto in fotos %}
+                    <div style="border: 1px solid var(--border); border-radius: 6px; overflow: hidden; background: #121214;">
+                        <img src="{{ url_for('static', filename='uploads/personagens/' ~ personagem ~ '/' ~ foto) }}" alt="Avatar" style="width: 100%; height: 180px; object-fit: cover; display: block;">
+                        <div style="padding: 8px; font-size: 0.8rem; color: var(--text-muted); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            {{ foto }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div style="background: #121214; padding: 30px; text-align: center; border-radius: 6px; color: var(--text-muted); border: 1px dashed var(--border);">
+                Nenhuma imagem salva ainda na pasta de <strong>{{ personagem | upper }}</strong>.<br>
+                <small>Jogue os arquivos de foto em <code>static/uploads/personagens/{{ personagem }}/</code> para aparecerem no painel.</small>
+            </div>
+        {% endif %}
+    </div>
+
+</div>
+
+<style>
+.tab-btn {
+    padding: 8px 16px;
+    background: #29292e;
+    color: var(--text-main);
+    text-decoration: none;
+    border-radius: 5px;
+    border: 1px solid var(--border);
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: 0.2s;
+}
+.tab-btn:hover {
+    background: var(--accent);
+    color: #fff;
+}
+.tab-btn.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent-hover);
+}
+.btn-action {
+    background: #29292e;
+    color: #fff;
+    border: 1px solid var(--border);
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+}
+.btn-action.primary {
+    background: var(--accent);
+    border-color: var(--accent-hover);
+}
+</style>
+
+<script>
+function copiarPrompt() {
+    const textarea = document.getElementById('promptText');
+    textarea.select();
+    document.execCommand('copy');
+    alert('Prompt copiado com sucesso!');
+}
+</script>
+{% endblock %}

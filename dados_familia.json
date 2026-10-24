@@ -1,0 +1,104 @@
+{
+    "mamae": {
+        "nome": "Mamãe",
+        "idade": "36 anos",
+        "icone": "👩",
+        "estilos": {
+            "casual": "A warm, friendly 30-year-old Brazilian mother, natural expression, subtle gentle smile, wearing a simple comfortable cotton t-shirt, soft natural morning daylight, cozy home background, highly detailed skin texture, realistic photorealistic portrait, 8k resolution, shot on 50mm lens, natural colors.",
+            "trabalho": "A focused and confident 30-year-old Brazilian mother working at a clean home office desk, holding a coffee mug, wearing a neat casual cardigan, laptop open in front of her, soft warm indoor lighting, modern organized room, ultra realistic, photorealistic, sharp focus, 8k, professional photography.",
+            "fitness": "An energetic and active 30-year-old Brazilian mother in athletic workout wear, healthy physique, smiling after a workout, outdoor park or bright home gym setup, natural sweat glow, dynamic realistic lighting, highly detailed, photorealistic, cinematic, 8k.",
+            "casa": "Cozy portrait of a 36-year-old Brazilian mother at home, comfortable loungewear, warm family home ambient lighting, natural smile, 8k"
+        }
+    },
+    "papai": {
+        "nome": "Papai",
+        "idade": "38 anos",
+        "icone": "👨",
+        "estilos": {
+            "casual": "Realistic portrait of a 38-year-old friendly Brazilian father, parda skin, short dark hair, natural smile, modern casual outfit, photorealistic 8k",
+            "trabalho": "Realistic portrait of a 38-year-old Brazilian man in casual business outfit, button-up shirt, confident smile, modern office setting, 8k",
+            "fitness": "Realistic portrait of a 38-year-old athletic Brazilian man in sportswear, active background, sunlight, detailed skin 8k"
+        }
+    },
+    "filha": {
+        "nome": "Filha Jovem",
+        "idade": "21 anos",
+        "icone": "👩‍🦱",
+        "estilos": {
+            "casual": "Realistic portrait of a 21-year-old attractive Brazilian young woman, parda skin, expressive brown eyes, long wavy dark hair, stylish casual outfit, confident friendly smile, 8k resolution",
+            "estudo": "Realistic portrait of a 21-year-old Brazilian female university student with backpack and tablet, modern library background, 8k",
+            "balada": "Stylish portrait of a 21-year-old Brazilian woman in night party outfit, subtle vibrant party lights, fashionable look, 8k",
+            "fitness": "Portrait of a 21-year-old Brazilian young woman in trendy gym clothes, active outdoor park, sunny day, 8k"
+        }
+    },
+    "filho": {
+        "nome": "Filho Teen",
+        "idade": "17 anos",
+        "icone": "👦",
+        "estilos": {
+            "casual": "Realistic portrait of a 17-year-old Brazilian teenage boy, parda skin, modern relaxed haircut, expressive energetic face, wearing a trendy hoodie, photorealistic 8k",
+            "esporte": "Portrait of a 17-year-old Brazilian teen in sports gear, holding a soccer ball or near a court, energetic posture, 8k",
+            "streetwear": "Stylish 17-year-old Brazilian teenager in urban streetwear, sneakers, modern urban background, 8k"
+        }
+    },
+    "vova_raiz": {
+        "nome": "Vovó Raíz",
+        "idade": "65 anos",
+        "icone": "👵",
+        "estilos": {
+            "casa": "A warm and loving 65-year-old Brazilian grandmother, natural parda/mestiça skin, gentle smile, natural grey wavy hair, fine lines around the eyes, beige cardigan, warm lighting, 8k",
+            "cozinha": "Warm portrait of a 65-year-old Brazilian grandmother in cozy kitchen background, smiling gently, baking/cooking outfit, photorealistic 8k",
+            "jardim": "A 65-year-old Brazilian grandmother in a green garden, natural sunlight, comfortable clothes, plants background, 8k"
+        }
+    },
+    "vovo_raiz": {
+        "nome": "Vovô Raíz",
+        "idade": "68 anos",
+        "icone": "👴",
+        "estilos": {
+            "casa": "A friendly 68-year-old Brazilian grandfather, parda skin, gentle smile, short white/grey hair, classic polo shirt, relaxed home setting, 8k",
+            "oficina": "A 68-year-old Brazilian grandfather in home workshop environment, holding tools, smiling, relaxed, 8k",
+            "passeio": "A 68-year-old Brazilian grandfather on a park bench, sunny day, casual jacket, gentle look, 8k"
+        }
+    },
+    "vova_fit": {
+        "nome": "Vovó Fit",
+        "idade": "62 anos",
+        "icone": "🏃‍♀️",
+        "estilos": {
+            "caminhada": "An athletic energetic 62-year-old Brazilian woman, fit body, glowing parda skin, grey ponytail, modern walking gear, park trail background, 8k",
+            "academia": "Fit 62-year-old Brazilian woman doing light weights in modern gym, confident smile, active lifestyle, 8k",
+            "praia": "Energetic 62-year-old Brazilian woman on tropical beach boardwalk, sunny morning light, sportswear, 8k"
+        }
+    },
+    "vovo_fit": {
+        "nome": "Vovô Fit",
+        "idade": "65 anos",
+        "icone": "🏃‍♂️",
+        "estilos": {
+            "corrida": "A fit active 65-year-old Brazilian man, toned physique, short silver hair, wearing running shirt, sports smartwatch, outdoor park background, 8k",
+            "academia": "Active 65-year-old Brazilian grandfather in modern fitness gym, workout gear, energetic stance, 8k",
+            "esporte": "A 65-year-old athletic Brazilian man outdoors, sports outfit, smiling, vibrant sunlight, 8k"
+        }
+    },
+    "coringa_kids": {
+        "nome": "Coringas Kids",
+        "idade": "7 anos",
+        "icone": "🎈",
+        "estilos": {
+            "brincando": "Realistic portrait of a cute 7-year-old Brazilian playful child, happy smile, casual colorful clothes, bright playground background, 8k",
+            "escola": "Cute 7-year-old Brazilian child with colorful backpack, cheerful student look, classroom background, 8k",
+            "festas": "Happy 7-year-old Brazilian kid at birthday party atmosphere, festive background, wearing party clothes, 8k"
+        }
+    },
+    "pet": {
+        "nome": "Pet (Golden)",
+        "idade": "3 anos",
+        "icone": "🐶",
+        "estilos": {
+            "brincando": "Cute loyal Golden Retriever dog, friendly playful eyes, vibrant fur, sunny green lawn background, highly detailed 8k",
+            "dormindo": "Adorable Golden Retriever sleeping comfortably on a soft carpet, warm home ambient light, 8k",
+            "passeio": "Golden Retriever on a leash during park walk, happy open mouth, outdoor daylight, 8k"
+        }
+    }
+}

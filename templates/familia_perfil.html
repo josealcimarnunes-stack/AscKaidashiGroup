@@ -1,0 +1,257 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-4">
+    <!-- Cabeçalho do Personagem -->
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div>
+            <h2>{{ p.icone }} {{ p.nome }} <span class="badge bg-secondary fs-6">{{ p.idade }}</span></h2>
+            <p class="text-muted mb-0">Painel Exclusivo de Gestão de Mídias e Prompts</p>
+        </div>
+        <a href="{{ url_for('familia.menu_familia') }}" class="btn btn-outline-secondary">← Voltar ao Elenco</a>
+    </div>
+
+    <!-- Navegação de Estilos / Pastas e Botão de Nova Pasta -->
+    <div class="mb-4">
+        <label class="form-label font-weight-bold text-light">📁 SELECIONE A SUB-PASTA DE ESTILO:</label>
+        <div class="d-flex flex-wrap gap-2 align-items-center">
+            {% for e in p.estilos.keys() %}
+                <a href="{{ url_for('familia.perfil_dedicado', personagem=chave_personagem, estilo=e) }}" 
+                   class="btn {% if e == estilo_ativo %}btn-primary{% else %}btn-dark border-secondary text-light{% endif %}">
+                   📁 {{ e | upper }}
+                </a>
+            {% endfor %}
+
+            <!-- Botão de Criar Nova Pasta ao Lado -->
+            <button class="btn btn-success ms-2" onclick="criarNovaPasta()">+ Nova Pasta</button>
+        </div>
+    </div>
+
+    <!-- Bloco do Prompt Mestre -->
+    <div class="card mb-4 shadow-sm bg-dark text-white border-secondary">
+        <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">⚙️ PROMPT MESTRE DE IA — Estilo: <span class="text-warning">[{{ estilo_ativo | upper }}]</span></h5>
+            <button class="btn btn-sm btn-outline-light" onclick="copiarPrompt()">📋 Copiar Prompt</button>
+        </div>
+        <div class="card-body">
+            <textarea id="txtPrompt" class="form-control bg-dark text-light border-secondary mb-3" rows="4">{{ prompt }}</textarea>
+            <button class="btn btn-primary" onclick="salvarPrompt()">💾 Salvar Alterações</button>
+            <span id="msgSalvar" class="ms-3 text-success fw-bold" style="display:none;">✓ Salvo com sucesso!</span>
+        </div>
+    </div>
+
+    <!-- Área de Upload por Drag & Drop Integrada -->
+    <div class="card mb-4 shadow-sm bg-dark border-secondary">
+        <div class="card-header bg-secondary text-white">
+            <h5 class="mb-0">📥 Upload de Imagens e Vídeos para a Pasta: <span class="text-warning">[{{ estilo_ativo | upper }}]</span></h5>
+        </div>
+        <div class="card-body text-center p-4">
+            <div id="dropArea" class="p-5 rounded border-dashed" 
+                 style="border: 2px dashed #0d6efd; background-color: rgba(13, 110, 253, 0.05); cursor: pointer;">
+                <i class="fs-1 text-primary mb-2">📁</i>
+                <h5 class="text-light">Arraste e solte suas imagens aqui</h5>
+                <p class="text-muted mb-2">ou clique dentro desta caixa para selecionar arquivos no computador</p>
+                <input type="file" id="fileInput" multiple accept="image/*,video/*" style="display:none;">
+            </div>
+        </div>
+    </div>
+
+    <!-- Barra de Ferramentas e Galeria de Fotos -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>🖼️ Fotos no Estilo <span class="text-primary">{{ estilo_ativo | upper }}</span> ({{ fotos|length }})</h4>
+        <div>
+            {% if fotos %}
+                <button class="btn btn-warning me-2" onclick="abrirCarrossel()">🎠 Modo Carrossel</button>
+                <a href="{{ url_for('familia.baixar_zip', personagem=chave_personagem, estilo=estilo_ativo) }}" 
+                   class="btn btn-outline-success">📥 Baixar Pasta em ZIP</a>
+            {% endif %}
+        </div>
+    </div>
+
+<!-- Grade de Fotos Lado a Lado com Botão de Excluir -->
+    <div id="galeriaFotos" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px;">
+        {% if fotos %}
+            {% for foto in fotos %}
+                <div class="card shadow-sm bg-dark border-secondary m-0 position-relative">
+                    <img src="{{ url_for('static', filename='uploads/personagens/' ~ chave_personagem ~ '/' ~ estilo_ativo ~ '/' ~ foto) }}" 
+                         class="card-img-top img-thumbnail bg-dark border-0 w-100" 
+                         style="height: 180px; object-fit: cover; cursor: pointer;"
+                         onclick="ampliarImagem(this.src)"
+                         title="Clique para ampliar">
+                    
+                    <!-- Botão de Apagar -->
+                    <button class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1 opacity-75"
+                            style="padding: 2px 6px; font-size: 12px; border-radius: 4px;"
+                            onclick="deletarFoto('{{ foto }}')"
+                            title="Apagar Imagem">
+                        🗑️
+                    </button>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12 text-center py-4 bg-dark text-muted rounded border border-secondary" style="grid-column: 1 / -1;">
+                <p class="mb-0">Nenhuma foto salva nesta sub-pasta ainda. Arraste arquivos acima para salvar automaticamente!</p>
+            </div>
+        {% endif %}
+    </div>
+<!-- Modal do Carrossel / Slide Show -->
+<div class="modal fade" id="modalCarrossel" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content bg-dark border-secondary">
+      <div class="modal-body p-0 text-center position-relative">
+        <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3 z-3" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner" id="carrosselItens">
+             <!-- Inserido dinamicamente via JS -->
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts de Interatividade -->
+<script>
+const chavePersonagem = "{{ chave_personagem }}";
+const estiloAtivo = "{{ estilo_ativo }}";
+
+function salvarPrompt() {
+    const texto = document.getElementById('txtPrompt').value;
+    fetch(`/familia/perfil/${chavePersonagem}`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ prompt: texto, estilo: estiloAtivo })
+    })
+    .then(r => r.json())
+    .then(data => {
+        if(data.status === 'sucesso') {
+            const msg = document.getElementById('msgSalvar');
+            msg.style.display = 'inline';
+            setTimeout(() => msg.style.display = 'none', 3000);
+        }
+    });
+}
+
+function copiarPrompt() {
+    const texto = document.getElementById('txtPrompt');
+    texto.select();
+    navigator.clipboard.writeText(texto.value);
+    alert("Prompt copiado para a área de transferência!");
+}
+
+function criarNovaPasta() {
+    const nomePasta = prompt("Digite o nome da nova pasta / estilo:");
+    if (nomePasta) {
+        fetch(`/familia/criar_pasta/${chavePersonagem}`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ nome_estilo: nomePasta })
+        })
+        .then(r => r.json())
+        .then(data => {
+            if(data.status === 'sucesso') {
+                window.location.href = `/familia/perfil/${chavePersonagem}?estilo=${data.estilo}`;
+            } else {
+                alert(data.mensagem);
+            }
+        });
+    }
+}
+
+// Drag & Drop
+const dropArea = document.getElementById('dropArea');
+const fileInput = document.getElementById('fileInput');
+
+dropArea.addEventListener('click', () => fileInput.click());
+
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+    dropArea.addEventListener(eventName, e => e.preventDefault());
+});
+
+dropArea.addEventListener('drop', e => {
+    const files = e.dataTransfer.files;
+    enviarArquivos(files);
+});
+
+fileInput.addEventListener('change', () => {
+    enviarArquivos(fileInput.files);
+});
+
+function enviarArquivos(files) {
+    if(!files.length) return;
+    const formData = new FormData();
+    for(let f of files) {
+        formData.append('arquivos', f);
+    }
+
+    fetch(`/familia/enviar/${chavePersonagem}/${estiloAtivo}`, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erro na resposta do servidor');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if(data.status === 'sucesso') {
+            window.location.reload();
+        } else {
+            alert("Erro: " + data.mensagem);
+        }
+    })
+    .catch(error => {
+        console.error('Erro no envio:', error);
+        alert("Falha ao enviar o arquivo.");
+    });
+}
+
+function abrirCarrossel() {
+    const imagens = document.querySelectorAll('#galeriaFotos img');
+    const container = document.getElementById('carrosselItens');
+    container.innerHTML = '';
+
+    imagens.forEach((img, index) => {
+        const div = document.createElement('div');
+        div.className = `carousel-item ${index === 0 ? 'active' : ''}`;
+        div.innerHTML = `<img src="${img.src}" class="d-block w-100" style="max-height: 85vh; object-fit: contain;">`;
+        container.appendChild(div);
+    });
+
+    const modal = new bootstrap.Modal(document.getElementById('modalCarrossel'));
+    modal.show();
+}
+
+function ampliarImagem(src) {
+    window.open(src, '_blank');
+}
+function deletarFoto(nomeArquivo) {
+    if (confirm(`Tem certeza que deseja apagar a foto "${nomeArquivo}"?`)) {
+        fetch(`/familia/deletar_foto/${chavePersonagem}/${estiloAtivo}`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ foto: nomeArquivo })
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.status === 'sucesso') {
+                window.location.reload(); // Recarrega para sumir com a foto
+            } else {
+                alert("Erro ao apagar: " + data.mensagem);
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Erro na requisição ao servidor.");
+        });
+    }
+}
+</script>
+{% endblock %}

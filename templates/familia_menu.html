@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="background: var(--card-bg); border: 1px solid var(--border); padding: 25px; border-radius: 8px;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 25px;">
+        <h2 style="color: var(--accent); margin: 0;">Seleção de Elenco - Família Virtual</h2>
+        <a href="{{ url_for('index') }}" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem;">← Voltar ao Dashboard</a>
+    </div>
+
+    <p style="color: var(--text-muted); margin-top: 0; margin-bottom: 25px;">
+        Clique em um integrante para abrir o <strong>Painel Exclusivo</strong> com suas sub-pastas de estilo e galeria de fotos dedicadas.
+    </p>
+
+    <!-- GRID DE CARDS DOS PERSONAGENS -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px;">
+        {% for chave, p in personagens.items() %}
+            <a href="{{ url_for('familia.perfil_dedicado', personagem=chave) }}" style="text-decoration: none; color: inherit;">
+                <div class="personagem-card">
+                    <div style="font-size: 3rem; margin-bottom: 10px;">{{ p.icone }}</div>
+                    <div style="font-size: 1.2rem; font-weight: bold; color: #fff;">{{ p.nome }}</div>
+                    <div style="font-size: 0.85rem; color: var(--accent); margin-bottom: 10px;">{{ p.idade }}</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 8px;">
+                        {{ p.estilos|length }} sub-pastas de estilo
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+
+</div>
+
+<style>
+.personagem-card {
+    background: #121214;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+.personagem-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(130, 87, 229, 0.2);
+}
+</style>
+{% endblock %}
